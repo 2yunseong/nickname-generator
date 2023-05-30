@@ -12,7 +12,7 @@ interface FontType {
 }
 
 const colors: StyleType = {
-  yellow100: 'ffd600',
+  yellow100: '#ffd600',
   yellow200: '#fae15f',
   yellow300: '#fde982',
   disable_yellow100: '#ede5bc',
