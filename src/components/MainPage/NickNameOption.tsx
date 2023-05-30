@@ -56,7 +56,7 @@ function NickNameOption() {
 }
 
 const OptionSelectSection = styled.div`
-  flex: 1;
+  flex: 0 0 206px;
   display: flex;
   flex-direction: column;
   gap: 16px;
