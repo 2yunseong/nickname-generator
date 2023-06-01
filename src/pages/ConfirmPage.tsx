@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 import { Box } from '../asset';
-import { useState } from 'react';
 import Nickname from '../components/ConfirmPage/Nickname';
 import { useFetch } from '../hooks/useFetch';
-import type { NickName as NickNameType } from '../types/nickname';
+import { useRecoilState } from 'recoil';
+import { selectNickname } from '../atom/selectNickname';
+import { useNavigate } from 'react-router-dom';
 
 export default function ConfirmPage() {
-  const [selectedNickname, setSelectedNickname] = useState('');
+  const [selectedNickname, setSelectedNickname] =
+    useRecoilState(selectNickname);
+  const navigate = useNavigate();
 
   const onConfirmClick = () => {
     if (!selectedNickname) return;
-    console.log(selectedNickname);
+    navigate('/result');
   };
+
   const {
     data: nicknames,
     isLoading,
