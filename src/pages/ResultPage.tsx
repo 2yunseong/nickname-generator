@@ -2,7 +2,15 @@ import styled from 'styled-components';
 import { ReactComponent as WootecoLogo } from '../asset/wooteco-logo.svg';
 import userDefault from '../asset/user-default.svg';
 
+const Crew = {
+  nickname: '파인',
+  generation: 5,
+  startDate: '07 FEB 2023',
+};
+
 export default function ResultPage() {
+  const { nickname, generation, startDate } = Crew;
+
   return (
     <Wrapper>
       <Title>마음에 드시나요?</Title>
@@ -10,9 +18,9 @@ export default function ResultPage() {
       <ImageWrapper>
         <PassCard>
           <CrewInfo>
-            <Nickname>닉네임</Nickname>
-            <Generation>우아한테크코스 n기</Generation>
-            <StartDate>07 FEB 2023</StartDate>
+            <Nickname>{nickname}</Nickname>
+            <Generation>우아한테크코스 {generation}기</Generation>
+            <StartDate>{startDate}</StartDate>
           </CrewInfo>
           <CrewImage src={userDefault} alt="닉네임 사진" />
           <WootecoLogo />
@@ -69,7 +77,7 @@ const PassCard = styled.div`
   justify-content: space-between;
   width: 259px;
   height: 351px;
-  padding: 12px 12px;
+  padding: 14px 12px 4px 12px;
   margin-bottom: 60px;
 
   border: 1px solid #0000004d;
@@ -80,17 +88,23 @@ const PassCard = styled.div`
 const CrewInfo = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 28px;
 `;
 
 const Nickname = styled.div`
+  height: 38px;
+  font-family: BMDOHYEON;
   font-size: 30px;
 `;
 
 const Generation = styled.div`
+  height: 16px;
+  font-family: BMJUA;
   font-size: 12px;
 `;
 
 const StartDate = styled.div`
+  font-family: BMJUA;
   font-size: 8px;
 `;
 
