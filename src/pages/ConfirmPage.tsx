@@ -16,11 +16,8 @@ export default function ConfirmPage() {
     navigate('/result');
   };
 
-  const {
-    data: nicknames,
-    isLoading,
-    isError,
-  } = useFetch<string[]>('../nicknames.json');
+  const { data: nicknames, isLoading } =
+    useFetch<string[]>('../nicknames.json');
 
   const isSelected = selectedNickname !== '';
   if (!nicknames) {
