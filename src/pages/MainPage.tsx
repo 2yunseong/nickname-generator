@@ -1,8 +1,17 @@
 import styled from 'styled-components';
 import { ReactComponent as ClosedBox } from '../asset/closed-box.svg';
 import NickNameOption from '../components/MainPage/NickNameOption';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { options as optionState } from '../atom/options';
 
 export default function MainPage() {
+  const [options, setOptions] = useRecoilState(optionState);
+  const navigate = useNavigate();
+
+  const onGenerateNickname = () => {
+    navigate(`/confirm`);
+  };
   return (
     <Wrapper>
       <Title>닉네임 랜덤박스</Title>
@@ -10,8 +19,10 @@ export default function MainPage() {
       <ImageWrapper>
         <ClosedBox />
       </ImageWrapper>
-      <NickNameOption />
-      <GenerateButton>박스열고 확인하기</GenerateButton>
+      <NickNameOption options={options} setOptions={setOptions} />
+      <GenerateButton onClick={onGenerateNickname}>
+        박스열고 확인하기
+      </GenerateButton>
     </Wrapper>
   );
 }

@@ -2,16 +2,26 @@ import styled from 'styled-components';
 import { Box } from '../asset';
 import { useState } from 'react';
 import Nickname from '../components/ConfirmPage/Nickname';
+import { useFetch } from '../hooks/useFetch';
+import type { NickName as NickNameType } from '../types/nickname';
 
 export default function ConfirmPage() {
   const [selectedNickname, setSelectedNickname] = useState('');
+
   const onConfirmClick = () => {
     if (!selectedNickname) return;
     console.log(selectedNickname);
   };
+  const {
+    data: nicknames,
+    isLoading,
+    isError,
+  } = useFetch<string[]>('../nicknames.json');
 
   const isSelected = selectedNickname !== '';
-
+  if (!nicknames) {
+    return <div>로딩중..</div>;
+  }
   return (
     <Container>
       <Header>
@@ -19,52 +29,42 @@ export default function ConfirmPage() {
         <SubTitle>닉네임을 골라 출입증을 만들 수 있습니다</SubTitle>
       </Header>
       <NicknameContainer>
-        <NicknameSection>
-          <Nickname
-            nickname={'윤생'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-          <Nickname
-            nickname={'크론'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-          <Nickname
-            nickname={'파인'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-        </NicknameSection>
-        <NicknameSection>
-          <Nickname
-            nickname={'파랑'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-          <Nickname
-            nickname={'노아이즈'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-          <Nickname
-            nickname={'산군'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-        </NicknameSection>
-        <NicknameSection>
-          <Nickname
-            nickname={'박스터'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-          <Nickname
-            nickname={'오도'}
-            selectedNickname={selectedNickname}
-            setSelectedNickname={setSelectedNickname}
-          />
-        </NicknameSection>
+        {isLoading ? null : (
+          <NicknameSection>
+            {nicknames.slice(0, 3).map((nickname, index) => (
+              <Nickname
+                key={index}
+                nickname={nickname}
+                selectedNickname={selectedNickname}
+                setSelectedNickname={setSelectedNickname}
+              />
+            ))}
+          </NicknameSection>
+        )}
+        {isLoading ? null : (
+          <NicknameSection>
+            {nicknames.slice(3, 6).map((nickname, index) => (
+              <Nickname
+                key={index + 23}
+                nickname={nickname}
+                selectedNickname={selectedNickname}
+                setSelectedNickname={setSelectedNickname}
+              />
+            ))}
+          </NicknameSection>
+        )}
+        {isLoading ? null : (
+          <NicknameSection>
+            {nicknames.slice(6).map((nickname, index) => (
+              <Nickname
+                key={index + 45}
+                nickname={nickname}
+                selectedNickname={selectedNickname}
+                setSelectedNickname={setSelectedNickname}
+              />
+            ))}
+          </NicknameSection>
+        )}
       </NicknameContainer>
       <Box />
       <ConfirmButton isSelected={isSelected} onClick={onConfirmClick}>

@@ -1,5 +1,6 @@
-import { ChangeEvent, Fragment, useState } from 'react';
+import { ChangeEvent, Dispatch, Fragment, SetStateAction } from 'react';
 import styled from 'styled-components';
+import type { NickNameLanguage, Option } from '../../types/option';
 
 const characterCount: { [count: string]: string } = {
   2: 'two',
@@ -7,18 +8,17 @@ const characterCount: { [count: string]: string } = {
   4: 'four',
 };
 
-const language: { [language: string]: string } = {
-  한글: 'korean',
-  영어: 'english',
+const lang: { [language: string]: NickNameLanguage } = {
+  한글: 'ko',
+  영어: 'en',
 };
 
-function NickNameOption() {
-  const [options, setOptions] = useState({
-    count: 2,
-    language: 'korean',
-    keyword: 'basic',
-  });
+interface NickNameOptionProps {
+  options: Option;
+  setOptions: Dispatch<SetStateAction<Option>>;
+}
 
+function NickNameOption({ options, setOptions }: NickNameOptionProps) {
   const handleChangeInput = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -27,7 +27,7 @@ function NickNameOption() {
 
     setOptions((prev) => ({ ...prev, [e.target.name]: newValue }));
   };
-  console.log(options);
+
   return (
     <OptionSelectSection>
       <OptionWrapper>
@@ -37,8 +37,8 @@ function NickNameOption() {
             <Fragment key={index}>
               <RadioInput
                 id={`count-${characterCount[count]}`}
-                name="count"
-                type="radio"
+                name='length'
+                type='radio'
                 value={count}
                 onChange={handleChangeInput}
               />
@@ -55,24 +55,24 @@ function NickNameOption() {
       <OptionWrapper>
         <OptionLabel>닉네임 옵션</OptionLabel>
         <Options>
-          {Object.keys(language).map((lang, index) => (
-            <Fragment key={index}>
+          {Object.keys(lang).map((unit) => (
+            <Fragment key={unit}>
               <RadioInput
-                id={language[lang]}
-                name="language"
-                type="radio"
-                value={language[lang]}
+                id={lang[unit]}
+                name='language'
+                type='radio'
+                value={lang[unit]}
                 onChange={handleChangeInput}
               />
-              <Label htmlFor={language[lang]}>{lang}</Label>
+              <Label htmlFor={lang[unit]}>{unit}</Label>
             </Fragment>
           ))}
         </Options>
       </OptionWrapper>
       <OptionWrapper>
         <OptionLabel>키워드</OptionLabel>
-        <SelectBox name="keyword" onChange={handleChangeInput}>
-          <option value="basic">기본</option>
+        <SelectBox name='keyword' onChange={handleChangeInput}>
+          <option value='nature'>기본</option>
         </SelectBox>
       </OptionWrapper>
     </OptionSelectSection>
