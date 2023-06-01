@@ -43,6 +43,7 @@ export const useFetch = <T>(url: string): FetchRes<T> => {
       }
       setIsLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { data, isLoading, isError };
