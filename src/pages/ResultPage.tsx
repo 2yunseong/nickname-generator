@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 import { ReactComponent as WootecoLogo } from '../asset/wooteco-logo.svg';
 import userDefault from '../asset/user-default.svg';
+import { useRecoilValue } from 'recoil';
+import { selectNickname } from '../atom/selectNickname';
 
 const Crew = {
-  nickname: '파인',
   generation: 5,
   startDate: '07 FEB 2023',
 };
 
 export default function ResultPage() {
-  const { nickname, generation, startDate } = Crew;
-
+  const { generation, startDate } = Crew;
+  const nickname = useRecoilValue(selectNickname);
   return (
     <Wrapper>
       <Title>마음에 드시나요?</Title>
@@ -22,7 +23,7 @@ export default function ResultPage() {
             <Generation>우아한테크코스 {generation}기</Generation>
             <StartDate>{startDate}</StartDate>
           </CrewInfo>
-          <CrewImage src={userDefault} alt="닉네임 사진" />
+          <CrewImage src={userDefault} alt='닉네임 사진' />
           <WootecoLogo />
         </PassCard>
       </ImageWrapper>
