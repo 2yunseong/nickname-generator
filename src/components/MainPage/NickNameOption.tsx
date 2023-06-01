@@ -2,7 +2,9 @@ import { ChangeEvent, Dispatch, Fragment, SetStateAction } from 'react';
 import styled from 'styled-components';
 import type { NickNameLanguage, Option } from '../../types/option';
 
-const characterCount: { [count: string]: string } = {
+type Option = { [key: string]: string };
+
+const characterCount: Option = {
   2: 'two',
   3: 'three',
   4: 'four',
@@ -24,7 +26,6 @@ function NickNameOption({ options, setOptions }: NickNameOptionProps) {
   ) => {
     const newValue =
       e.target.name === 'count' ? Number(e.target.value) : e.target.value;
-
     setOptions((prev) => ({ ...prev, [e.target.name]: newValue }));
   };
 
@@ -42,10 +43,7 @@ function NickNameOption({ options, setOptions }: NickNameOptionProps) {
                 value={count}
                 onChange={handleChangeInput}
               />
-              <Label
-                shape={'circle'}
-                htmlFor={`count-${characterCount[count]}`}
-              >
+              <Label shape={'circle'} htmlFor={`count-${characterCount[count]}`}>
                 {count}
               </Label>
             </Fragment>
