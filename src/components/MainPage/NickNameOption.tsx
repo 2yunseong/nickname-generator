@@ -1,33 +1,38 @@
 import { ChangeEvent, Fragment, useState } from 'react';
 import styled from 'styled-components';
 
-const characterCount: { [count: string]: string } = {
+type Option = { [key: string]: string };
+
+const characterCount: Option = {
   2: 'two',
   3: 'three',
   4: 'four',
 };
 
-const language: { [language: string]: string } = {
+const language: Option = {
   한글: 'korean',
   영어: 'english',
+};
+
+const keywords: Option = {
+  우테코: 'wooteco',
+  동물: 'animal',
+  자연: 'nature',
 };
 
 function NickNameOption() {
   const [options, setOptions] = useState({
     count: 2,
     language: 'korean',
-    keyword: 'basic',
+    keyword: 'wooteco',
   });
 
-  const handleChangeInput = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const newValue =
-      e.target.name === 'count' ? Number(e.target.value) : e.target.value;
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const newValue = e.target.name === 'count' ? Number(e.target.value) : e.target.value;
 
     setOptions((prev) => ({ ...prev, [e.target.name]: newValue }));
   };
-  console.log(options);
+
   return (
     <OptionSelectSection>
       <OptionWrapper>
@@ -42,10 +47,7 @@ function NickNameOption() {
                 value={count}
                 onChange={handleChangeInput}
               />
-              <Label
-                shape={'circle'}
-                htmlFor={`count-${characterCount[count]}`}
-              >
+              <Label shape={'circle'} htmlFor={`count-${characterCount[count]}`}>
                 {count}
               </Label>
             </Fragment>
@@ -72,7 +74,11 @@ function NickNameOption() {
       <OptionWrapper>
         <OptionLabel>키워드</OptionLabel>
         <SelectBox name="keyword" onChange={handleChangeInput}>
-          <option value="basic">기본</option>
+          {Object.keys(keywords).map((keyword, index) => (
+            <option key={index} value={keywords[keyword]}>
+              {keyword}
+            </option>
+          ))}
         </SelectBox>
       </OptionWrapper>
     </OptionSelectSection>
