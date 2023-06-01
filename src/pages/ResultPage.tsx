@@ -77,7 +77,7 @@ const PassCard = styled.div`
   justify-content: space-between;
   width: 259px;
   height: 351px;
-  padding: 14px 12px 4px 12px;
+  padding: 14px 12px 12px;
   margin-bottom: 60px;
 
   border: 1px solid #0000004d;
