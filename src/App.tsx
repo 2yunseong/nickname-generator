@@ -5,14 +5,17 @@ import { ThemeProvider } from 'styled-components';
 import ResetStyle from './styles/resetStyle';
 import { Outlet } from 'react-router-dom';
 import Layout from './components/common/Layout';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <ResetStyle />
-      <Layout>
-        <Outlet />
-      </Layout>
+      <RecoilRoot>
+        <ResetStyle />
+        <Layout>
+          <Outlet />
+        </Layout>
+      </RecoilRoot>
     </ThemeProvider>
   );
 }
