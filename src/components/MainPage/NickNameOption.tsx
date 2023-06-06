@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, Fragment, SetStateAction } from 'react';
 import styled from 'styled-components';
-import type { NickNameLanguage, Option } from '../../types/option';
+import type { NickNameLanguage, NickNameKeyword, Option } from '../../types/option';
 
 const characterCount: { [count: string]: string } = {
   2: 'two',
@@ -13,17 +13,20 @@ const lang: { [language: string]: NickNameLanguage } = {
   영어: 'en',
 };
 
+const keywords: { [keyword: string]: NickNameKeyword } = {
+  자연: 'nature',
+  우테코: 'wooteco',
+  동물: 'animal',
+};
+
 interface NickNameOptionProps {
   options: Option;
   setOptions: Dispatch<SetStateAction<Option>>;
 }
 
 function NickNameOption({ options, setOptions }: NickNameOptionProps) {
-  const handleChangeInput = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const newValue =
-      e.target.name === 'count' ? Number(e.target.value) : e.target.value;
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const newValue = e.target.name === 'length' ? Number(e.target.value) : e.target.value;
 
     setOptions((prev) => ({ ...prev, [e.target.name]: newValue }));
   };
@@ -42,10 +45,7 @@ function NickNameOption({ options, setOptions }: NickNameOptionProps) {
                 value={count}
                 onChange={handleChangeInput}
               />
-              <Label
-                shape={'circle'}
-                htmlFor={`count-${characterCount[count]}`}
-              >
+              <Label shape={'circle'} htmlFor={`count-${characterCount[count]}`}>
                 {count}
               </Label>
             </Fragment>
@@ -57,13 +57,7 @@ function NickNameOption({ options, setOptions }: NickNameOptionProps) {
         <Options>
           {Object.keys(lang).map((unit) => (
             <Fragment key={unit}>
-              <RadioInput
-                id={lang[unit]}
-                name='language'
-                type='radio'
-                value={lang[unit]}
-                onChange={handleChangeInput}
-              />
+              <RadioInput id={lang[unit]} name='lang' type='radio' value={lang[unit]} onChange={handleChangeInput} />
               <Label htmlFor={lang[unit]}>{unit}</Label>
             </Fragment>
           ))}
@@ -72,7 +66,11 @@ function NickNameOption({ options, setOptions }: NickNameOptionProps) {
       <OptionWrapper>
         <OptionLabel>키워드</OptionLabel>
         <SelectBox name='keyword' onChange={handleChangeInput}>
-          <option value='nature'>기본</option>
+          {Object.keys(keywords).map((keyword, index) => (
+            <option key={index} value={keywords[keyword]}>
+              {keyword}
+            </option>
+          ))}
         </SelectBox>
       </OptionWrapper>
     </OptionSelectSection>

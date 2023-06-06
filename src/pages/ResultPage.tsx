@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { ReactComponent as WootecoLogo } from '../asset/wooteco-logo.svg';
 import userDefault from '../asset/user-default.svg';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { selectNickname } from '../atom/selectNickname';
+import { useNavigate } from 'react-router-dom';
+import { options } from '../atom/options';
 
 const Crew = {
   generation: 5,
@@ -11,7 +13,17 @@ const Crew = {
 
 export default function ResultPage() {
   const { generation, startDate } = Crew;
-  const nickname = useRecoilValue(selectNickname);
+  const [nickname, setNickname] = useRecoilState(selectNickname);
+  const resetOption = useResetRecoilState(options);
+
+  const navigate = useNavigate();
+
+  const restart = () => {
+    resetOption();
+    setNickname('');
+    navigate('/');
+  };
+
   return (
     <Wrapper>
       <Title>마음에 드시나요?</Title>
@@ -27,7 +39,10 @@ export default function ResultPage() {
           <WootecoLogo />
         </PassCard>
       </ImageWrapper>
-      <GenerateButton>친구에게 자랑하기</GenerateButton>
+      <ButtonWrapper>
+        <GenerateButton onClick={restart}>다시하기</GenerateButton>
+        <GenerateButton>친구에게 자랑하기</GenerateButton>
+      </ButtonWrapper>
     </Wrapper>
   );
 }
@@ -48,6 +63,12 @@ const SubTitle = styled.h2`
   color: #fae15f;
   font-size: 15px;
   width: fit-content;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 const GenerateButton = styled.button`
